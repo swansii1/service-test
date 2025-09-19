@@ -1,101 +1,66 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import axios from "axios";
-
-const columns = [
-  { field: "id", headerName: "ID", width: 90 },
-  {
-    field: "firstName",
-    headerName: "First name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "lastName",
-    headerName: "Last name",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ""} ${row.lastName || ""}`,
-  },
-  {
-    field: "gender",
-    headerName: "Gender",
-    width: 110,
-    editable: true,
-  },
-  {
-    field: "email",
-    headerName: "Email",
-    width: 150,
-    editable: true,
-  },
-  {
-    field: "age",
-    headerName: "Age",
-    type: "number",
-    width: 150,
-    editable: true,
-  },
-];
+import { columns } from "../utils/const/columns";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUsers } from "../redux/slices/apiSlice";
 
 export function Table() {
   const [rows, setRows] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [inputText, setInputText] = useState("");
+
+  const dispatch = useDispatch();
+  const { data: users, loading, error } = useSelector((state) => state.users);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          "https://68c9e2d8ceef5a150f66432a.mockapi.io/citizens/users",
-        );
-        const fetchedData = response.data;
+    dispatch(fetchUsers());
+  }, [dispatch]);
 
-        const formattedRows = fetchedData.map((obj) => {
-          const nameParts = obj.fio.split(" ");
-          const firstName = nameParts[1];
-          const lastName = nameParts[0];
+  console.log("USERS", users);
 
-          const gender = obj.gender;
-          const email = obj.email;
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setInputText(value);
+  };
 
-          const birthDate = new Date(obj.dateOfBirth);
-          const today = new Date();
-          const age = today.getFullYear() - birthDate.getFullYear();
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+  };
 
-          return {
-            id: obj.id,
-            firstName: firstName,
-            lastName: lastName,
-            gender: gender,
-            email: email,
-            age: age,
-          };
-        });
+  const filteredRows = rows.filter((row) =>
+    `${row.firstName} ${row.lastName}`
+      .toLowerCase()
+      .includes(inputText.toLowerCase()),
+  );
 
-        setRows(formattedRows);
-      } catch (err) {
-        console.error("Ошибка при получении данных:", err);
-        setError(err);
-      } finally {
-        setLoading(false);
-      }
-    };
+  useEffect(() => {
+    const formattedRows = users.map((obj) => {
+      const nameParts = obj.fio.split(" ");
+      const firstName = nameParts[1];
+      const lastName = nameParts[0];
 
-    fetchData();
-  }, []);
+      const gender = obj.gender;
+      const email = obj.email;
 
-  if (loading) {
-    return (
+      const birthDate = new Date(obj.dateOfBirth);
+      const today = new Date();
+      const age = today.getFullYear() - birthDate.getFullYear();
+
+      return {
+        id: obj.id,
+        firstName: firstName,
+        lastName: lastName,
+        gender: gender,
+        email: email,
+        age: age,
+      };
+    });
+
+    setRows(formattedRows);
+  }, [users]);
+
+  {
+    loading && (
       <Box
         sx={{
           height: 400,
@@ -110,8 +75,8 @@ export function Table() {
     );
   }
 
-  if (error) {
-    return (
+  {
+    error && (
       <Box
         sx={{
           height: 400,
@@ -122,27 +87,48 @@ export function Table() {
           alignItems: "center",
         }}
       >
-        Ошибка при загрузке: {error.message}
+        Ошибка при загрузке: {error}
       </Box>
     );
   }
 
   return (
-    <Box sx={{ height: 480, width: "70%" }}>
-      <DataGrid
-        rows={rows}
-        columns={columns}
-        initialState={{
-          pagination: {
-            paginationModel: {
-              pageSize: 7,
-            },
-          },
+    <div className="bg-white">
+      <Box
+        sx={{
+          height: 530,
+          width: "100%",
+          display: "flex",
+          flexDirection: "column",
+          gap: "5px",
         }}
-        pageSizeOptions={[5]}
-        checkboxSelection
-        disableRowSelectionOnClick
-      />
-    </Box>
+      >
+        <div className="mx-auto pt-1">
+          <form onSubmit={handleSearchSubmit} className="w-100">
+            <input
+              onChange={handleInputChange}
+              className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+              type="search"
+              placeholder="Поиск по ФИО..."
+              value={inputText}
+            />
+          </form>
+        </div>
+        <DataGrid
+          rows={filteredRows}
+          columns={columns}
+          initialState={{
+            pagination: {
+              paginationModel: {
+                pageSize: 7,
+              },
+            },
+          }}
+          pageSizeOptions={[5]}
+          checkboxSelection
+          disableRowSelectionOnClick
+        />
+      </Box>
+    </div>
   );
 }

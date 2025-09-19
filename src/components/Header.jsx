@@ -1,30 +1,27 @@
-import { useState } from "react";
-
+import { Link } from "react-router-dom";
 export function Header() {
-  const [inputText, setInputText] = useState("");
 
-  const handleInputChange = (e) => {
-    const value = e.target.value;
-    setInputText(value);
-  };
-
-  const handleSearchSubmit = (e) => {
-    e.preventDefault(); 
-  };
 
   return (
     <header className="flex justify-between items-center p-4 bg-white shadow-sm">
       <h1 className="text-2xl font-bold text-gray-800">SERVICE</h1>
-      <div className="text-gray-700">Привет, Администратор.</div>
-      <form onSubmit={handleSearchSubmit} className="flex-grow max-w-md mx-4">
-        <input
-          onChange={handleInputChange}
-          className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-          type="search"
-          placeholder="Поиск по ФИО, СНИЛС..."
-          value={inputText}
-        />
-      </form>
+  
+        <nav>
+          <ul className="">
+            <li>
+              <Link to="/citizens" className="text-blue-600 hover:underline">
+                Citizens
+              </Link>
+            </li>
+            <li>
+              <Link to="/dashboard" className="text-blue-600 hover:underline">
+                Dashboard
+              </Link>
+            </li>
+          </ul>
+        </nav>
+      
+      <div className="text-gray-700 font-bold">Привет, Админ!</div>
     </header>
   );
 }
