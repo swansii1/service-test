@@ -16,8 +16,6 @@ export function Table() {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  console.log("USERS", users);
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputText(value);
