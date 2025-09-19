@@ -1,16 +1,9 @@
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../redux/slices/apiSlice";
+
 import { Bar } from "react-chartjs-2";
 
-export function AgeGenderChart() {
-  const { data: users, error, loading } = useSelector((state) => state.users);
-  const dispatch = useDispatch();
+export function AgeGenderChart({ users }) {
   const [chartData, setChartData] = useState(null);
-
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   const ageGroups = ["18–25", "26–35", "36–45", "46+"];
 
@@ -86,9 +79,6 @@ export function AgeGenderChart() {
       y: { stacked: true, beginAtZero: true },
     },
   };
-
-  if (loading) return <p>Загрузка...</p>;
-  if (error) return <p style={{ color: "red" }}>Ошибка: {error}</p>;
 
   return chartData ? (
     <div style={{ height: "300px", width: "33%" }}>

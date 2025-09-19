@@ -1,7 +1,5 @@
 import { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-import { fetchUsers } from "../../redux/slices/apiSlice";
-import { useDispatch, useSelector } from "react-redux";
 
 const chartOptions = {
   responsive: true,
@@ -31,18 +29,11 @@ const chartOptions = {
   },
 };
 
-export function GenderDistributionChart() {
+export function GenderDistributionChart({ users }) {
   const [chartData, setChartData] = useState({
     labels: [],
     datasets: [],
   });
-
-  const dispatch = useDispatch();
-  const { data: users, loading, error } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   useEffect(() => {
     if (!users || users.length === 0) return;
@@ -92,37 +83,6 @@ export function GenderDistributionChart() {
       ],
     });
   }, [users]);
-
-  if (loading) {
-    return (
-      <div
-        style={{
-          height: "300px",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Загрузка данных графика...
-      </div>
-    );
-  }
-
-  if (error) {
-    return (
-      <div
-        style={{
-          height: "300px",
-          color: "red",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Ошибка при загрузке графика: {error.message}
-      </div>
-    );
-  }
 
   return (
     <div style={{ height: "300px", width: "33%" }}>

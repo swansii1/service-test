@@ -1,18 +1,9 @@
 import { Bar } from "react-chartjs-2";
-
 import { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../../redux/slices/apiSlice";
 
-export function AgeDistributionChart() {
+
+export function AgeDistributionChart({ users }) {
   const [chartData, setChartData] = useState({ labels: [], datasets: [] });
-
-  const dispatch = useDispatch();
-  const { data: users, loading, error } = useSelector((state) => state.users);
-
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   useEffect(() => {
     if (!users || users.length === 0) return;

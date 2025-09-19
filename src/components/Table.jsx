@@ -2,19 +2,16 @@ import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "../utils/const/columns";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchUsers } from "../redux/slices/apiSlice";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
-export function Table() {
+export function Table({ users }) {
+  const navigate = useNavigate();
   const [rows, setRows] = useState([]);
   const [inputText, setInputText] = useState("");
 
-  const dispatch = useDispatch();
-  const { data: users, loading, error } = useSelector((state) => state.users);
+  const { loading, error } = useSelector((state) => state.users);
 
-  useEffect(() => {
-    dispatch(fetchUsers());
-  }, [dispatch]);
 
   const handleInputChange = (e) => {
     const value = e.target.value;
@@ -115,14 +112,15 @@ export function Table() {
         <DataGrid
           rows={filteredRows}
           columns={columns}
+          onRowClick={(params) => navigate(`/citizens/user/${params.id}`)}
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 7,
+                pageSize: 8,
               },
             },
           }}
-          pageSizeOptions={[5]}
+          pageSizeOptions={[8]}
           checkboxSelection
           disableRowSelectionOnClick
         />
