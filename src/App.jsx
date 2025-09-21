@@ -1,15 +1,15 @@
 import "./App.css";
 import { Header } from "./components/Header";
-import { Table } from "./components/Table";
 import { Route, Routes } from "react-router-dom";
 import { Dashboard } from "./page/Dashboard";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchUsers } from "./redux/slices/apiSlice";
 import { useEffect } from "react";
+import { Citizens } from "./page/Citizens";
+import { AccountUserPage } from "./page/AccountUserPage";
 
 function App() {
   const dispatch = useDispatch();
-  const { data: users } = useSelector((state) => state.users);
 
   useEffect(() => {
     dispatch(fetchUsers());
@@ -21,8 +21,9 @@ function App() {
       <main className="main_container">
         <Routes>
           <Route path="/" element={<Dashboard />} />
-          <Route path="/citizens" element={<Table users={users} />} />
+          <Route path="/citizens" element={<Citizens />} />
           <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/citizens/user/:id" element={<AccountUserPage />} />
         </Routes>
       </main>
     </div>

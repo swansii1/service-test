@@ -12,7 +12,6 @@ export function Table({ users }) {
 
   const { loading, error } = useSelector((state) => state.users);
 
-
   const handleInputChange = (e) => {
     const value = e.target.value;
     setInputText(value);
@@ -21,6 +20,39 @@ export function Table({ users }) {
   const handleSearchSubmit = (e) => {
     e.preventDefault();
   };
+
+    {
+      loading && (
+        <Box
+          sx={{
+            height: 400,
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Загрузка данных...
+        </Box>
+      );
+    }
+
+    {
+      error && (
+        <Box
+          sx={{
+            height: 400,
+            width: "100%",
+            color: "red",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          Ошибка при загрузке: {error}
+        </Box>
+      );
+    }
 
   const filteredRows = rows.filter((row) =>
     `${row.firstName} ${row.lastName}`
@@ -54,38 +86,7 @@ export function Table({ users }) {
     setRows(formattedRows);
   }, [users]);
 
-  {
-    loading && (
-      <Box
-        sx={{
-          height: 400,
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Загрузка данных...
-      </Box>
-    );
-  }
 
-  {
-    error && (
-      <Box
-        sx={{
-          height: 400,
-          width: "100%",
-          color: "red",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Ошибка при загрузке: {error}
-      </Box>
-    );
-  }
 
   return (
     <div className="bg-white">
@@ -110,9 +111,10 @@ export function Table({ users }) {
           </form>
         </div>
         <DataGrid
+          sx={{ cursor: "pointer" }}
           rows={filteredRows}
           columns={columns}
-          onRowClick={(params) => navigate(`/citizens/user/${params.id}`)}
+          onRowClick={(params) => navigate(`/citizens/user/${params.row.id}`)}
           initialState={{
             pagination: {
               paginationModel: {
