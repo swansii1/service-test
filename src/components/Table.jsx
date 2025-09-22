@@ -21,38 +21,38 @@ export function Table({ users }) {
     e.preventDefault();
   };
 
-    {
-      loading && (
-        <Box
-          sx={{
-            height: 400,
-            width: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          Загрузка данных...
-        </Box>
-      );
-    }
+  {
+    loading && (
+      <Box
+        sx={{
+          height: 400,
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Загрузка данных...
+      </Box>
+    );
+  }
 
-    {
-      error && (
-        <Box
-          sx={{
-            height: 400,
-            width: "100%",
-            color: "red",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          Ошибка при загрузке: {error}
-        </Box>
-      );
-    }
+  {
+    error && (
+      <Box
+        sx={{
+          height: 400,
+          width: "100%",
+          color: "red",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+        }}
+      >
+        Ошибка при загрузке: {error}
+      </Box>
+    );
+  }
 
   const filteredRows = rows.filter((row) =>
     `${row.firstName} ${row.lastName}`
@@ -86,13 +86,11 @@ export function Table({ users }) {
     setRows(formattedRows);
   }, [users]);
 
-
-
   return (
     <div className="bg-white">
       <Box
         sx={{
-          height: 530,
+          height: 682,
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -118,11 +116,11 @@ export function Table({ users }) {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 8,
+                pageSize: 10,
               },
             },
           }}
-          pageSizeOptions={[8]}
+          pageSizeOptions={[10]}
           checkboxSelection
           disableRowSelectionOnClick
         />
