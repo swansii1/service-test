@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, Routes, useParams } from "react-router-dom";
-import { fetchUsers } from "../redux/slices/apiSlice";
+import { fetchUsers } from "../redux/slices/apiSlice"; // ✅ usersSlice
 import photo from "../assets/placeholder.png";
 import { PassportData } from "../components/UserData/PasportData";
 import { EducationData } from "../components/UserData/EducationData";
@@ -32,14 +32,8 @@ export function AccountUserPage() {
       to: `/citizens/user/${user.id}/passportdata`,
       title: "Паспортные данные",
     },
-    {
-      to: `/citizens/user/${user.id}/familyInfo`,
-      title: "Семья",
-    },
-    {
-      to: `/citizens/user/${user.id}/education`,
-      title: "Образование",
-    },
+    { to: `/citizens/user/${user.id}/familyInfo`, title: "Семья" },
+    { to: `/citizens/user/${user.id}/education`, title: "Образование" },
   ];
 
   return (
@@ -66,7 +60,6 @@ export function AccountUserPage() {
             {btnNav.map((item, idx) => (
               <li key={idx} className="px-3">
                 <NavLink
-                  onClick={() => setFormVisible(false)}
                   to={item.to}
                   className={({ isActive }) =>
                     isActive

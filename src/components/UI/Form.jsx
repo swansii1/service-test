@@ -1,8 +1,9 @@
-import { Button, Form, Input, Select } from "antd";
+import { Button, Form, Input, Select, message } from "antd";
 import { useDispatch } from "react-redux";
-import { updateUser } from "../../redux/slices/putSlice";
+import { updateUser } from "../../redux/slices/apiSlice"; // ✅ из usersSlice
 
 const { Option } = Select;
+
 const formItemLayout = {
   labelCol: { xs: { span: 24 }, sm: { span: 8 } },
   wrapperCol: { xs: { span: 24 }, sm: { span: 16 } },
@@ -10,15 +11,24 @@ const formItemLayout = {
 const tailFormItemLayout = {
   wrapperCol: { xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } },
 };
+
 const Forma = ({ user }) => {
   const [form] = Form.useForm();
   const dispatch = useDispatch();
 
   const onFinish = (values) => {
-    console.log("Received values of form: ", values);
     const fullPayload = { ...user, ...values };
-    dispatch(updateUser({ id: user.id, userData: fullPayload }));
+
+    dispatch(updateUser({ id: user.id, userData: fullPayload }))
+      .unwrap()
+      .then(() => {
+        message.success("Данные успешно обновлены ");
+      })
+      .catch(() => {
+        message.error("Ошибка при обновлении данных");
+      });
   };
+
   return (
     <div className="flex justify-center items-center w-full pt-10">
       <Form
@@ -39,14 +49,14 @@ const Forma = ({ user }) => {
         <Form.Item
           name="fio"
           label="ФИО"
-          placeholder="Иванов Иван Андреевич"
           rules={[
             { type: "string", message: "The input is not valid full name!" },
             { required: true, message: "Please input your full name!" },
           ]}
         >
-          <Input />
+          <Input placeholder="Иванов Иван Андреевич" />
         </Form.Item>
+
         <Form.Item
           name="email"
           label="Почта"
@@ -57,6 +67,7 @@ const Forma = ({ user }) => {
         >
           <Input />
         </Form.Item>
+
         <Form.Item
           name="address"
           label="Адрес"
@@ -64,6 +75,7 @@ const Forma = ({ user }) => {
         >
           <Input />
         </Form.Item>
+
         <Form.Item
           name="phone"
           label="Номер телефона"
@@ -73,23 +85,26 @@ const Forma = ({ user }) => {
         >
           <Input style={{ width: "100%" }} />
         </Form.Item>
+
         <Form.Item
           name="gender"
-          label="Gender"
+          label="Пол"
           rules={[{ required: true, message: "Please select gender!" }]}
         >
-          <Select placeholder="select your gender">
+          <Select placeholder="Выберите пол">
             <Option value="Мужчина">Мужчина</Option>
             <Option value="Женщина">Женщина</Option>
           </Select>
         </Form.Item>
+
         <Form.Item {...tailFormItemLayout}>
           <Button type="primary" htmlType="submit">
-            Change data
+            Сохранить изменения
           </Button>
         </Form.Item>
       </Form>
     </div>
   );
 };
+
 export default Forma;
