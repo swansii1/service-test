@@ -7,6 +7,7 @@ import { fetchUsers } from "./redux/slices/apiSlice";
 import { useEffect } from "react";
 import { Citizens } from "./page/Citizens";
 import { AccountUserPage } from "./page/AccountUserPage";
+import "@ant-design/v5-patch-for-react-19";
 
 function App() {
   const dispatch = useDispatch();
@@ -18,6 +19,7 @@ function App() {
   return (
     <div className="wrapper">
       <Header />
+
       <main className="main_container">
         <Routes>
           <Route path="/" element={<Dashboard />} />

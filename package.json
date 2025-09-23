@@ -10,11 +10,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@ant-design/v5-patch-for-react-19": "^1.0.3",
     "@emotion/react": "^11.14.0",
     "@emotion/styled": "^11.14.1",
     "@mui/x-data-grid": "^8.11.3",
     "@reduxjs/toolkit": "^2.9.0",
     "@tailwindcss/vite": "^4.1.13",
+    "antd": "^5.27.4",
     "axios": "^1.12.2",
     "chart.js": "^4.5.0",
     "lucide-react": "^0.544.0",

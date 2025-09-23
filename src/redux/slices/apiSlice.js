@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../utils/const/api";
-
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, { rejectWithValue }) => {
@@ -15,14 +14,9 @@ export const fetchUsers = createAsyncThunk(
     }
   },
 );
-
 const usersSlice = createSlice({
   name: "users",
-  initialState: {
-    data: [],
-    loading: false,
-    error: null,
-  },
+  initialState: { data: [], loading: false, error: null },
   reducers: {
     clearUsers: (state) => {
       state.data = [];
@@ -33,18 +27,17 @@ const usersSlice = createSlice({
     builder
       .addCase(fetchUsers.pending, (state) => {
         state.loading = true;
-        state.error = null; 
+        state.error = null;
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
         state.loading = false;
-        state.data = action.payload; 
+        state.data = action.payload;
       })
       .addCase(fetchUsers.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload || "Неизвестная ошибка"; 
+        state.error = action.payload || "Неизвестная ошибка";
       });
   },
 });
-
 export const { clearUsers } = usersSlice.actions;
 export default usersSlice.reducer;

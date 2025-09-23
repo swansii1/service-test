@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "../utils/const/columns";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Spiner from "./UI/Spin";
 
 export function Table({ users }) {
   const navigate = useNavigate();
@@ -22,19 +23,7 @@ export function Table({ users }) {
   };
 
   {
-    loading && (
-      <Box
-        sx={{
-          height: 400,
-          width: "100%",
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        Загрузка данных...
-      </Box>
-    );
+    loading && <Spiner />;
   }
 
   {
@@ -87,10 +76,10 @@ export function Table({ users }) {
   }, [users]);
 
   return (
-    <div className="bg-white">
+    <div className="bg-white rounded-lg shadow-md m-4">
       <Box
         sx={{
-          height: 682,
+          height: 580,
           width: "100%",
           display: "flex",
           flexDirection: "column",
@@ -116,11 +105,11 @@ export function Table({ users }) {
           initialState={{
             pagination: {
               paginationModel: {
-                pageSize: 10,
+                pageSize: 8,
               },
             },
           }}
-          pageSizeOptions={[10]}
+          pageSizeOptions={[8]}
           checkboxSelection
           disableRowSelectionOnClick
         />
