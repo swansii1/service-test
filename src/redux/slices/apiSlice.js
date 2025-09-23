@@ -2,7 +2,6 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import axios from "axios";
 import { API_URL } from "../../utils/const/api";
 
-
 export const fetchUsers = createAsyncThunk(
   "users/fetchUsers",
   async (_, { rejectWithValue }) => {
@@ -40,15 +39,6 @@ const usersSlice = createSlice({
     loading: false,
     error: null,
   },
-  reducers: {
-    clearUsers: (state) => {
-      state.data = [];
-      state.error = null;
-    },
-    clearError: (state) => {
-      state.error = null;
-    },
-  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchUsers.pending, (state) => {
@@ -73,7 +63,7 @@ const usersSlice = createSlice({
         const updatedUser = action.payload;
         const index = state.data.findIndex((u) => u.id === updatedUser.id);
         if (index !== -1) {
-          state.data[index] = updatedUser; 
+          state.data[index] = updatedUser;
         } else {
           state.data.push(updatedUser);
         }
@@ -85,5 +75,4 @@ const usersSlice = createSlice({
   },
 });
 
-export const { clearUsers, clearError } = usersSlice.actions;
 export default usersSlice.reducer;

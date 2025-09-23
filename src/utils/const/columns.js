@@ -13,12 +13,16 @@ export const columns = [
     editable: true,
   },
   {
-    field: "fullName",
-    headerName: "Full name",
-    description: "This column has a value getter and is not sortable.",
-    sortable: false,
-    width: 160,
-    valueGetter: (value, row) => `${row.firstName || ""} ${row.lastName || ""}`,
+    field: "patronymic",
+    headerName: "Patronymic",
+    width: 150,
+    editable: true,
+  },
+  {
+    field: "education",
+    headerName: "Education",
+    width: 150,
+    editable: true,
   },
   {
     field: "gender",

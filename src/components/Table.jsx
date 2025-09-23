@@ -54,9 +54,11 @@ export function Table({ users }) {
       const nameParts = obj.fio.split(" ");
       const firstName = nameParts[1];
       const lastName = nameParts[0];
+      const patronymic = nameParts[2];
 
       const gender = obj.gender;
       const email = obj.email;
+      const education = obj.education[0].level;
 
       const birthDate = new Date(obj.dateOfBirth);
       const today = new Date();
@@ -66,7 +68,9 @@ export function Table({ users }) {
         id: obj.id,
         firstName: firstName,
         lastName: lastName,
+        patronymic: patronymic,
         gender: gender,
+        education: education,
         email: email,
         age: age,
       };
@@ -101,6 +105,8 @@ export function Table({ users }) {
           sx={{ cursor: "pointer" }}
           rows={filteredRows}
           columns={columns}
+          paginationMode="server"
+          onPaginationModelChange
           onRowClick={(params) => navigate(`/citizens/user/${params.row.id}`)}
           initialState={{
             pagination: {
