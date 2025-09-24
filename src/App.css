@@ -1,13 +1,15 @@
 @import "tailwindcss";
 
+
 #root {
   max-width: 100%;
   margin: 0 auto;
-  height: 100vh;
+  min-height: 100vh;
   padding: 0.5rem 1rem;
   text-align: center;
   background-color: rgb(100, 170, 250);
 }
+
 .wrapper {
   display: flex;
   justify-content: center;

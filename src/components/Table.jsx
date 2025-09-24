@@ -80,46 +80,79 @@ export function Table({ users }) {
   }, [users]);
 
   return (
-    <div className="bg-white rounded-lg shadow-md m-4">
-      <Box
+    <Box
+      sx={{
+        height: 580,
+        minWidth: 400,
+        display: "flex",
+        flexDirection: "column",
+        gap: "5px",
+        backgroundColor: "rgba(255, 255, 255, 0.297)",
+        borderRadius: 6,
+        paddingBottom: 5,
+      }}
+    >
+      <div className="mx-auto pt-1">
+        <form onSubmit={handleSearchSubmit} className="w-100">
+          <input
+            onChange={handleInputChange}
+            className="border border-white rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
+            type="search"
+            placeholder="Поиск по ФИО..."
+            value={inputText}
+          />
+        </form>
+      </div>
+      <DataGrid
+        
         sx={{
-          height: 580,
-          width: "100%",
-          display: "flex",
-          flexDirection: "column",
-          gap: "5px",
-        }}
-      >
-        <div className="mx-auto pt-1">
-          <form onSubmit={handleSearchSubmit} className="w-100">
-            <input
-              onChange={handleInputChange}
-              className="border border-gray-300 rounded-lg p-2 w-full focus:outline-none focus:ring-2 focus:ring-blue-500"
-              type="search"
-              placeholder="Поиск по ФИО..."
-              value={inputText}
-            />
-          </form>
-        </div>
-        <DataGrid
-          sx={{ cursor: "pointer" }}
-          rows={filteredRows}
-          columns={columns}
-          paginationMode="server"
-          onPaginationModelChange
-          onRowClick={(params) => navigate(`/citizens/user/${params.row.id}`)}
-          initialState={{
-            pagination: {
-              paginationModel: {
-                pageSize: 8,
-              },
+          margin: "0 auto",
+          "&.MuiDataGrid-root": {
+            backgroundColor: "#f0f8ff",
+            border: "2px solid #1976d2",
+          },
+          "& .MuiDataGrid-columnHeader": {
+            backgroundColor: "#1976d2",
+            color: "white",
+            "& .MuiDataGrid-columnHeaderTitle": {
+              fontWeight: "bold",
             },
-          }}
-          pageSizeOptions={[8]}
-          checkboxSelection
-          disableRowSelectionOnClick
-        />
-      </Box>
-    </div>
+          },
+          "& .MuiDataGrid-row": {
+            cursor: "pointer",
+            backgroundColor: "#ffffff",
+            "&:nth-of-type(even)": {
+              backgroundColor: "#f5f5f5",
+            },
+            "&:hover": {
+              backgroundColor: "#e3f2fd",
+            },
+          },
+          minWidth: "40%",
+          maxWidth: "100%",
+          padding: 2,
+          "& .MuiDataGrid-cell": {
+            "&:focus": {
+              outline: "none !important",
+            },
+            "&:focus-within": {
+              outline: "none !important",
+            },
+          },
+        }}
+        rows={filteredRows}
+        columns={columns}
+        onRowClick={(params) => navigate(`/citizens/user/${params.row.id}`)}
+        disableVirtualization={false}
+        initialState={{
+          pagination: {
+            paginationModel: {
+              pageSize: 8,
+            },
+          },
+        }}
+        pageSizeOptions={[8]}
+      />
+    </Box>
   );
 }
