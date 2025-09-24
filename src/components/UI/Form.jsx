@@ -1,7 +1,6 @@
 import { Button, Form, Input, Select, message } from "antd";
 import { useUpdateUserMutation } from "../../redux/slices/apiSlice";
 
-
 const Forma = ({ user }) => {
   const [form] = Form.useForm();
   const [updateUser, { isLoading }] = useUpdateUserMutation();
@@ -67,7 +66,7 @@ const Forma = ({ user }) => {
           label="Телефон"
           rules={[{ required: true, message: "Введите телефон!" }]}
         >
-          <Input style={{ width: "100%" }} />
+          <Input />
         </Form.Item>
 
         <Form.Item
@@ -76,8 +75,8 @@ const Forma = ({ user }) => {
           rules={[{ required: true, message: "Выберите пол!" }]}
         >
           <Select placeholder="Выберите пол">
-            <Option value="Мужчина">Мужчина</Option>
-            <Option value="Женщина">Женщина</Option>
+            <Select.Option value="Мужчина">Мужчина</Select.Option>
+            <Select.Option value="Женщина">Женщина</Select.Option>
           </Select>
         </Form.Item>
 

@@ -1,5 +1,5 @@
 import { NavLink, Route, Routes, useParams } from "react-router-dom";
-import { useGetUsersQuery } from "../redux/slices/apiSlice";
+import { useGetUserByIdQuery } from "../redux/slices/apiSlice";
 import photo from "../assets/placeholder.png";
 import { PassportData } from "../components/UserData/PasportData";
 import { EducationData } from "../components/UserData/EducationData";
@@ -10,17 +10,10 @@ import Forma from "../components/UI/Form";
 export function AccountUserPage() {
   const { id } = useParams();
 
-  const { data, isLoading, isError } = useGetUsersQuery({
-    page: 1,
-    limit: 8,
-  });
+  const { data: user, isLoading, isError } = useGetUserByIdQuery(id);
 
   if (isLoading) return <Spiner />;
   if (isError) return <div>Ошибка при загрузке данных</div>;
-  if (!data || !data.users || data.users.length === 0)
-    return <div>Нет данных</div>;
-
-  const user = data.users.find((u) => String(u.id) === id);
   if (!user) return <div>Пользователь не найден</div>;
 
   const btnNav = [

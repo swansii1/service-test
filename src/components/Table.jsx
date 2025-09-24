@@ -1,17 +1,18 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "../utils/const/columns";
 import { useNavigate } from "react-router-dom";
 import Spiner from "./UI/Spin";
 import { useGetUsersQuery } from "../redux/slices/apiSlice";
+import { useSelector } from "react-redux";
 
 export function Table() {
   const navigate = useNavigate();
   const [page, setPage] = useState(1);
   const [limit, setLimit] = useState(8);
-  const [search, setSearch] = useState("");
-  const [inputText, setInputText] = useState("");
+
+  const search = useSelector((state) => state.search.search);
 
   const { data, isLoading, isError } = useGetUsersQuery({
     page,
@@ -39,12 +40,6 @@ export function Table() {
     };
   });
 
-  const handleSearchSubmit = (e) => {
-    e.preventDefault();
-    setPage(1);
-    setSearch(inputText);
-  };
-
   return (
     <Box
       sx={{
@@ -52,24 +47,10 @@ export function Table() {
         minWidth: 400,
         display: "flex",
         flexDirection: "column",
-        gap: "5px",
-        backgroundColor: "rgba(255, 255, 255, 0.297)",
         borderRadius: 6,
         paddingBottom: 5,
       }}
     >
-      <form onSubmit={handleSearchSubmit}>
-        <input
-          type="search"
-          placeholder="Поиск по ФИО..."
-          value={inputText}
-          onChange={(e) => setInputText(e.target.value)}
-        />
-      </form>
-
-      {isLoading && <Spiner />}
-      {isError && <div>Ошибка загрузки</div>}
-
       <DataGrid
         sx={{
           margin: "0 auto",

@@ -1,18 +1,17 @@
 import { createRoot } from "react-dom/client";
-import "./index.css";
 import App from "./App.jsx";
-import { BrowserRouter} from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { store } from "./redux/store.js";
 import {
   Chart as ChartJS,
-  CategoryScale, 
-  LinearScale, 
-  PointElement, 
+  CategoryScale,
+  LinearScale,
+  PointElement,
   LineElement,
-  BarElement, 
-  Title, 
+  BarElement,
+  Title,
   Tooltip,
-  Legend, 
+  Legend,
   ArcElement,
 } from "chart.js";
 import { Provider } from "react-redux";
@@ -26,7 +25,7 @@ ChartJS.register(
   Title,
   Tooltip,
   Legend,
-  ArcElement, 
+  ArcElement,
 );
 
 createRoot(document.getElementById("root")).render(
