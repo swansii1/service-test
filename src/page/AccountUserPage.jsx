@@ -1,7 +1,5 @@
-import { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { NavLink, Route, Routes, useParams } from "react-router-dom";
-import { fetchUsers } from "../redux/slices/apiSlice"; // ✅ usersSlice
+import { useGetUsersQuery } from "../redux/slices/apiSlice";
 import photo from "../assets/placeholder.png";
 import { PassportData } from "../components/UserData/PasportData";
 import { EducationData } from "../components/UserData/EducationData";
@@ -11,20 +9,18 @@ import Forma from "../components/UI/Form";
 
 export function AccountUserPage() {
   const { id } = useParams();
-  const dispatch = useDispatch();
-  const { data: users, loading, error } = useSelector((state) => state.users);
 
-  useEffect(() => {
-    if (!users || users.length === 0) {
-      dispatch(fetchUsers());
-    }
-  }, [dispatch, users]);
+  const { data, isLoading, isError } = useGetUsersQuery({
+    page: 1,
+    limit: 8,
+  });
 
-  if (loading) return <Spiner />;
-  if (error) return <div>Ошибка: {error}</div>;
-  if (!users || users.length === 0) return <div>Нет данных</div>;
+  if (isLoading) return <Spiner />;
+  if (isError) return <div>Ошибка при загрузке данных</div>;
+  if (!data || !data.users || data.users.length === 0)
+    return <div>Нет данных</div>;
 
-  const user = users.find((u) => String(u.id) === id);
+  const user = data.users.find((u) => String(u.id) === id);
   if (!user) return <div>Пользователь не найден</div>;
 
   const btnNav = [

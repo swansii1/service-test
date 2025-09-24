@@ -1,40 +1,26 @@
 import { Button, Form, Input, Select, message } from "antd";
-import { useDispatch } from "react-redux";
-import { updateUser } from "../../redux/slices/apiSlice"; // ✅ из usersSlice
+import { useUpdateUserMutation } from "../../redux/slices/apiSlice";
 
-const { Option } = Select;
-
-const formItemLayout = {
-  labelCol: { xs: { span: 24 }, sm: { span: 8 } },
-  wrapperCol: { xs: { span: 24 }, sm: { span: 16 } },
-};
-const tailFormItemLayout = {
-  wrapperCol: { xs: { span: 24, offset: 0 }, sm: { span: 16, offset: 8 } },
-};
 
 const Forma = ({ user }) => {
   const [form] = Form.useForm();
-  const dispatch = useDispatch();
+  const [updateUser, { isLoading }] = useUpdateUserMutation();
 
-  const onFinish = (values) => {
+  const onFinish = async (values) => {
     const fullPayload = { ...user, ...values };
-
-    dispatch(updateUser({ id: user.id, userData: fullPayload }))
-      .unwrap()
-      .then(() => {
-        message.success("Данные успешно обновлены ");
-      })
-      .catch(() => {
-        message.error("Ошибка при обновлении данных");
-      });
+    try {
+      await updateUser({ id: user.id, userData: fullPayload }).unwrap();
+      message.success("Данные успешно обновлены");
+    } catch (err) {
+      message.error("Ошибка при обновлении данных");
+    }
   };
 
   return (
     <div className="flex justify-center items-center w-full pt-10">
       <Form
-        {...formItemLayout}
         form={form}
-        name="register"
+        name="updateUser"
         onFinish={onFinish}
         initialValues={{
           fio: user.fio,
@@ -50,8 +36,8 @@ const Forma = ({ user }) => {
           name="fio"
           label="ФИО"
           rules={[
-            { type: "string", message: "The input is not valid full name!" },
-            { required: true, message: "Please input your full name!" },
+            { type: "string", message: "Неверное ФИО!" },
+            { required: true, message: "Введите ФИО!" },
           ]}
         >
           <Input placeholder="Иванов Иван Андреевич" />
@@ -61,8 +47,8 @@ const Forma = ({ user }) => {
           name="email"
           label="Почта"
           rules={[
-            { type: "email", message: "The input is not valid E-mail!" },
-            { required: true, message: "Please input your E-mail!" },
+            { type: "email", message: "Неверная почта!" },
+            { required: true, message: "Введите почту!" },
           ]}
         >
           <Input />
@@ -71,17 +57,15 @@ const Forma = ({ user }) => {
         <Form.Item
           name="address"
           label="Адрес"
-          rules={[{ required: true, message: "Please input your adress!" }]}
+          rules={[{ required: true, message: "Введите адрес!" }]}
         >
           <Input />
         </Form.Item>
 
         <Form.Item
           name="phone"
-          label="Номер телефона"
-          rules={[
-            { required: true, message: "Please input your phone number!" },
-          ]}
+          label="Телефон"
+          rules={[{ required: true, message: "Введите телефон!" }]}
         >
           <Input style={{ width: "100%" }} />
         </Form.Item>
@@ -89,7 +73,7 @@ const Forma = ({ user }) => {
         <Form.Item
           name="gender"
           label="Пол"
-          rules={[{ required: true, message: "Please select gender!" }]}
+          rules={[{ required: true, message: "Выберите пол!" }]}
         >
           <Select placeholder="Выберите пол">
             <Option value="Мужчина">Мужчина</Option>
@@ -97,8 +81,8 @@ const Forma = ({ user }) => {
           </Select>
         </Form.Item>
 
-        <Form.Item {...tailFormItemLayout}>
-          <Button type="primary" htmlType="submit">
+        <Form.Item>
+          <Button type="primary" htmlType="submit" loading={isLoading}>
             Сохранить изменения
           </Button>
         </Form.Item>
