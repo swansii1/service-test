@@ -1,10 +1,9 @@
-import { useCallback, useState } from "react";
+import { useState } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
-import { columns } from "../utils/const/columns";
+import { columns } from "../../utils/constants/columns";
 import { useNavigate } from "react-router-dom";
-import Spiner from "./UI/Spin";
-import { useGetUsersQuery } from "../redux/slices/apiSlice";
+import { useGetUsersQuery } from "../../redux/slices/apiSlice";
 import { useSelector } from "react-redux";
 
 export function Table() {
@@ -14,7 +13,7 @@ export function Table() {
 
   const search = useSelector((state) => state.search.search);
 
-  const { data, isLoading, isError } = useGetUsersQuery({
+  const { data } = useGetUsersQuery({
     page,
     limit,
     search,

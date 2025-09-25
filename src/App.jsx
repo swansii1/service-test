@@ -1,9 +1,9 @@
 import "./App.css";
-import { Header } from "./components/Header";
+import { Header } from "./components/UI/Header";
 import { Route, Routes } from "react-router-dom";
-import { Dashboard } from "./page/Dashboard";
-import { Citizens } from "./page/Citizens";
-import { AccountUserPage } from "./page/AccountUserPage";
+import { Dashboard } from "./pages/Dashboard";
+import { Citizens } from "./pages/Citizens";
+import { AccountUserPage } from "./pages/AccountUserPage";
 import "@ant-design/v5-patch-for-react-19";
 
 function App() {

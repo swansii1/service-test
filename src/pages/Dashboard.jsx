@@ -1,7 +1,7 @@
 import { useGetAllUsersQuery } from "../redux/slices/apiSlice";
-import { AgeDistributionChart } from "../components/dashboards/AgeDistributionChart";
-import { AgeGenderChart } from "../components/dashboards/AgeGenderChar";
-import { GenderDistributionChart } from "../components/dashboards/GenderDistributionChart";
+import { AgeDistributionChart } from "../components/charts/AgeDistributionChart";
+import { AgeGenderChart } from "../components/charts/AgeGenderChar";
+import { GenderDistributionChart } from "../components/charts/GenderDistributionChart";
 import Spiner from "../components/UI/Spin";
 
 export function Dashboard() {

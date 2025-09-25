@@ -1,4 +1,4 @@
-import { Table } from "../components/Table";
+import { Table } from "../components/UI/Table";
 import { SearchUserInput } from "../components/UI/SearchUserInput";
 import Spiner from "../components/UI/Spin";
 import { useGetUsersQuery } from "../redux/slices/apiSlice";
