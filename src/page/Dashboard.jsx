@@ -1,14 +1,11 @@
-import { useGetUsersQuery } from "../redux/slices/apiSlice";
+import { useGetAllUsersQuery } from "../redux/slices/apiSlice";
 import { AgeDistributionChart } from "../components/dashboards/AgeDistributionChart";
 import { AgeGenderChart } from "../components/dashboards/AgeGenderChar";
 import { GenderDistributionChart } from "../components/dashboards/GenderDistributionChart";
 import Spiner from "../components/UI/Spin";
 
 export function Dashboard() {
-  const { data, isLoading, isError } = useGetUsersQuery({
-    page: 1,
-    limit: 1000,
-  });
+  const { data, isLoading, isError } = useGetAllUsersQuery();
 
   const users = data?.users || [];
 

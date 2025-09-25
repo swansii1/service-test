@@ -19,7 +19,6 @@ export const usersApi = createApi({
       },
       providesTags: ["Users"],
     }),
-
     updateUser: builder.mutation({
       query: ({ id, userData }) => ({
         url: `/${id}`,
@@ -32,8 +31,20 @@ export const usersApi = createApi({
       query: (id) => `/${id}`,
       providesTags: (result, error, id) => [{ type: "Users", id }],
     }),
+    getAllUsers: builder.query({
+      query: () => "",
+      transformResponse: (response) => ({
+        users: response,
+        total: response.length,
+      }),
+      providesTags: ["Users"],
+    }),
   }),
 });
 
-export const { useGetUsersQuery, useUpdateUserMutation, useGetUserByIdQuery } =
-  usersApi;
+export const {
+  useGetUsersQuery,
+  useUpdateUserMutation,
+  useGetUserByIdQuery,
+  useGetAllUsersQuery,
+} = usersApi;
