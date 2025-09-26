@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-
 import { Bar } from "react-chartjs-2";
+import { ageGenderChartOption } from "../../utils/chartData/AgeGenderChart";
 
 export function AgeGenderChart({ users }) {
   const [chartData, setChartData] = useState(null);
@@ -63,28 +63,11 @@ export function AgeGenderChart({ users }) {
     });
   }, [users]);
 
-  const options = {
-    responsive: true,
-    plugins: {
-      legend: {
-        position: "top",
-      },
-      title: {
-        display: true,
-        text: "Распределение по возрастным группам и полу",
-      },
-    },
-    scales: {
-      x: { stacked: true },
-      y: { stacked: true, beginAtZero: true },
-    },
-  };
-
   return chartData ? (
     <div className="h-full w-full border border-blue-200">
       <Bar
         data={chartData}
-        options={{ ...options, maintainAspectRatio: false }}
+        options={{ ...ageGenderChartOption, maintainAspectRatio: false }}
       />
     </div>
   ) : null;

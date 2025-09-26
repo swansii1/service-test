@@ -1,33 +1,6 @@
 import { useState, useEffect } from "react";
 import { Pie } from "react-chartjs-2";
-
-const chartOptions = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: {
-    legend: {
-      position: "top",
-    },
-    title: {
-      display: true,
-      text: "Распределение граждан по полу",
-    },
-    tooltip: {
-      callbacks: {
-        label: function (context) {
-          let label = context.label || "";
-          if (label) {
-            label += ": ";
-          }
-          if (context.parsed !== null) {
-            label += context.parsed + " чел.";
-          }
-          return label;
-        },
-      },
-    },
-  },
-};
+import { ageGenderChartOption } from "../../utils/chartData/ageGenderageChartOptions";
 
 export function GenderDistributionChart({ users }) {
   const [chartData, setChartData] = useState({
@@ -87,7 +60,7 @@ export function GenderDistributionChart({ users }) {
   return (
     <div className="h-full w-full border border-blue-200">
       {chartData.labels.length > 0 && chartData.datasets[0]?.data.length > 0 ? (
-        <Pie data={chartData} options={chartOptions} />
+        <Pie data={chartData} options={ageGenderChartOption} />
       ) : (
         <div
           style={{

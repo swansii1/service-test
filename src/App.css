@@ -22,10 +22,6 @@ ul {
   gap: 10px;
 }
 
-ul > li {
-  font-size: 20px;
-}
-
 @media (max-width: 740px) {
   .account-container {
     flex-direction: column !important;
