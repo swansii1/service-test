@@ -1,12 +1,55 @@
-# React + Vite
+# Проект Dashboard
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Проект представляет собой веб-приложение для работы с данными пользователей, отображения таблиц и дашбордов, а также личных карточек пользователей.  
 
-Currently, two official plugins are available:
+## Технологии
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **Frontend**: React, TypeScript  
+- **Стилизация**: Tailwind CSS  
+- **Управление состоянием**: Redux Toolkit  
+- **Роутинг**: React Router  
+- **Таблицы**: DataGrid с виртуализацией для оптимизации работы с большими объемами данных  
+- **API-запросы**: Axios  
+- **Инструменты разработки**: Vite , ESLint, Prettier  
 
-## Expanding the ESLint configuration
+## Реализованные функциональности
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. **Таблица пользователей**  
+   - Сортировка и фильтрация данных  
+   - Виртуализация строк для ускоренной работы с большими таблицами  
+   - Возможность редактирования и удаления записей  
+
+2. **Страница дашбордов**  
+   - Основная аналитическая панель  
+   - Графики и метрики по пользователям и активности  
+
+3. **Личные карточки пользователей**  
+   - Просмотр детальной информации о пользователе  
+   - Аватар, контактные данные, статус активности  
+
+4. **Навигация**  
+   - Динамическая навигация по страницам приложения  
+   - Гибкое адаптивное меню  
+
+## Запуск проекта на локальном компьютере
+
+### 1. Клонирование репозитория
+```bash
+git clone <URL_репозитория>
+cd <название_папки>
+git clone <URL_репозитория>
+cd <название_папки>
+```
+
+### 2. Установка зависимостей
+```bash
+npm install  OR   yarn install
+```
+
+### 3. Запуск проекта
+```bash
+npm run dev  OR   yarn dev
+```
+
+### 4. Открытие проекта в браузере
+Перейти по адресу: http://localhost:5173 
