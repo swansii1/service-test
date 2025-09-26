@@ -54,13 +54,16 @@ export function AgeDistributionChart({ users }) {
     },
   };
 
-  return (
-    <div style={{ height: "300px", width: "33%" }}>
-      {chartData.labels.length > 0 ? (
-        <Bar data={chartData} options={chartOptions} />
-      ) : (
-        <p>Нет данных для отображения</p>
-      )}
-    </div>
-  );
+ return (
+   <div className="h-full w-full border border-blue-200">
+     {chartData.labels.length > 0 ? (
+       <Bar
+         data={chartData}
+         options={{ ...chartOptions, maintainAspectRatio: false }}
+       />
+     ) : (
+       <p>Нет данных для отображения</p>
+     )}
+   </div>
+ );
 }

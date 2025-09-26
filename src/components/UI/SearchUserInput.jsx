@@ -19,18 +19,19 @@ export const SearchUserInput = memo(() => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <Space style={{ width: "40%" }} direction="vertical">
+    <form onSubmit={handleSubmit} className="w-full flex justify-center">
+      <div className="w-full sm:w-2/3 md:w-1/2 lg:w-2/5">
         <Search
-          placeholder="input search text"
+          placeholder="Введите пользователя..."
           allowClear
-          enterButton="Search"
+          enterButton="Поиск"
           size="middle"
           value={inputText}
           onChange={(e) => dispatch(setInputText(e.target.value.trim()))}
           onSearch={handleSearchClick}
+          className="w-full"
         />
-      </Space>
+      </div>
     </form>
   );
 });

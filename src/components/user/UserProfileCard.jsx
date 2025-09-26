@@ -1,8 +1,10 @@
 import photo from "../../assets/placeholder.png";
 
-export function UserProfileCard({ user }) {
+export function UserProfileCard({ user, className }) {
   return (
-    <div className="flex flex-col items-center gap-5 bg-gray-100 rounded-lg shadow-md p-4 w-full lg:w-1/3">
+    <div
+      className={`border-red-100 flex flex-col items-center gap-5 bg-gray-100 rounded-lg shadow-md p-4 ${className}`}
+    >
       <img
         className="rounded-full border border-gray-300 mt-5 w-32 h-32 object-cover"
         src={photo}

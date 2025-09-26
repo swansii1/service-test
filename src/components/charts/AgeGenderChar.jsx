@@ -81,8 +81,11 @@ export function AgeGenderChart({ users }) {
   };
 
   return chartData ? (
-    <div style={{ height: "300px", width: "33%" }}>
-      <Bar data={chartData} options={options} />
+    <div className="h-full w-full border border-blue-200">
+      <Bar
+        data={chartData}
+        options={{ ...options, maintainAspectRatio: false }}
+      />
     </div>
   ) : null;
 }

@@ -10,9 +10,10 @@ const btnNav = [
   { key: "edu", to: "education", title: "Образование" },
 ];
 
-export function UserNavigateData({ user }) {
+
+export function UserNavigateData({ user, className }) {
   return (
-    <div className="bg-white rounded-lg shadow-md w-full lg:w-2/3">
+    <div className={`bg-white rounded-lg shadow-md w-full ${className}`}>
       <nav className="pt-3 pb-3 bg-blue-50 rounded-t-lg">
         <ul className="flex flex-wrap justify-evenly">
           {btnNav.map((item) => (

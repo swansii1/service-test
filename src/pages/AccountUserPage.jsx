@@ -6,7 +6,6 @@ import { UserNavigateData } from "../components/user/UserNavigateData";
 
 export function AccountUserPage() {
   const { id } = useParams();
-
   const { data: user, isLoading, isError } = useGetUserByIdQuery(id);
 
   if (isLoading) return <Spiner />;
@@ -14,10 +13,16 @@ export function AccountUserPage() {
   if (!user) return <div>Пользователь не найден</div>;
 
   return (
-    <div className="flex w-full justify-around gap-5 p-4">
-      <UserProfileCard user={user} />
+    <div className="flex flex-nowrap gap-5 p-4 w-full account-container">
+      <UserProfileCard
+        user={user}
+        className="flex-shrink w-[40%] min-w-[280px]"
+      />
 
-      <UserNavigateData user={user} />
+      <UserNavigateData
+        user={user}
+        className="flex-shrink w-[60%] min-w-[280px]"
+      />
     </div>
   );
 }

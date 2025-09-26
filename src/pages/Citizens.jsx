@@ -14,9 +14,9 @@ export function Citizens() {
     <div
       style={{
         height: 580,
-        minWidth: 400,
-        width: 1400,
-        maxWidth: "100%",
+        minWidth: "280px", 
+        width: "100%", 
+        maxWidth: "1400px", 
         display: "flex",
         flexDirection: "column",
         gap: "5px",

@@ -85,7 +85,7 @@ export function GenderDistributionChart({ users }) {
   }, [users]);
 
   return (
-    <div style={{ height: "300px", width: "33%" }}>
+    <div className="h-full w-full border border-blue-200">
       {chartData.labels.length > 0 && chartData.datasets[0]?.data.length > 0 ? (
         <Pie data={chartData} options={chartOptions} />
       ) : (

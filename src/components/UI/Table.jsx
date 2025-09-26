@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Box from "@mui/material/Box";
 import { DataGrid } from "@mui/x-data-grid";
 import { columns } from "../../utils/constants/columns";
@@ -39,20 +39,36 @@ export function Table() {
     };
   });
 
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const responsiveColumns =
+    windowWidth < 600
+      ? columns.filter((col) =>
+          ["id", "firstName", "lastName"].includes(col.field),
+        )
+      : columns;
+
   return (
     <Box
       sx={{
         height: 580,
-        minWidth: 400,
+        width: "100%",
+        maxWidth: 1000,
+        minWidth: 320,
+        margin: "0 auto",
         display: "flex",
         flexDirection: "column",
-        borderRadius: 6,
-        paddingBottom: 5,
+        borderRadius: 2,
+        paddingBottom: 2,
       }}
     >
       <DataGrid
         sx={{
-          margin: "0 auto",
           "&.MuiDataGrid-root": {
             backgroundColor: "#f0f8ff",
             border: "2px solid #1976d2",
@@ -67,27 +83,22 @@ export function Table() {
           "& .MuiDataGrid-row": {
             cursor: "pointer",
             backgroundColor: "#ffffff",
-            "&:nth-of-type(even)": {
-              backgroundColor: "#f5f5f5",
-            },
-            "&:hover": {
-              backgroundColor: "#e3f2fd",
-            },
+            "&:nth-of-type(even)": { backgroundColor: "#f5f5f5" },
+            "&:hover": { backgroundColor: "#e3f2fd" },
           },
-          minWidth: "40%",
-          maxWidth: "100%",
-          padding: 2,
           "& .MuiDataGrid-cell": {
-            "&:focus": {
-              outline: "none !important",
-            },
-            "&:focus-within": {
-              outline: "none !important",
-            },
+            whiteSpace: "normal",
+            wordWrap: "break-word",
+            "&:focus": { outline: "none !important" },
+            "&:focus-within": { outline: "none !important" },
           },
         }}
         rows={rows}
-        columns={columns}
+        columns={responsiveColumns.map((col) => ({
+          ...col,
+          flex: 1,
+          minWidth: 100,
+        }))}
         rowCount={total}
         pagination
         paginationMode="server"
