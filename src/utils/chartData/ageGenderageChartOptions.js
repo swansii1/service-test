@@ -1,4 +1,5 @@
 export const ageGenderChartOption = {
+  maintainAspectRatio: false,
   responsive: true,
   plugins: {
     legend: {

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Bar } from "react-chartjs-2";
-import { ageGenderChartOption } from "../../utils/chartData/AgeGenderChart";
+import { ageGenderChartOption } from "../../utils/chartData/ageGenderageChartOptions";
 
 export function AgeGenderChart({ users }) {
   const [chartData, setChartData] = useState(null);
