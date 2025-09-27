@@ -1,11 +1,10 @@
-import { Input, Space } from "antd";
-import { memo } from "react";
+import { Input } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { setInputText, applySearch } from "../../redux/slices/searchSlice";
 
 const { Search } = Input;
 
-export const SearchUserInput = memo(() => {
+export const SearchUserInput = () => {
   const dispatch = useDispatch();
   const inputText = useSelector((state) => state.search.inputText);
 
@@ -34,4 +33,4 @@ export const SearchUserInput = memo(() => {
       </div>
     </form>
   );
-});
+};
