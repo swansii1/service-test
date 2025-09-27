@@ -6,8 +6,8 @@ export function UserProfileCard({ user, className }) {
       className={`border-red-100 flex flex-col items-center gap-5 bg-gray-100 rounded-lg shadow-md p-4 ${className}`}
     >
       <img
-        className="rounded-full border border-gray-300 mt-5 w-32 h-32 object-cover"
-        src={photo}
+        className="rounded-full border border-gray-300 mt-5 w-42 h-42 object-cover"
+        src={user.image || photo}
         alt="avatar"
       />
       <div className="flex flex-col gap-3 bg-blue-50 rounded-lg w-full p-4">
