@@ -11,7 +11,7 @@ export function Header() {
       </h1>
 
       <nav className="flex-1 flex justify-center">
-        <ul className="flex gap-4">
+        <ul className="flex gap-4 flex-wrap">
           <li>
             <Link
               to="/citizens"
