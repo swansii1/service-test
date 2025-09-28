@@ -28,4 +28,4 @@ export const UserNav = memo(({ userId }) => {
       </ul>
     </nav>
   );
-},[]);
+});
