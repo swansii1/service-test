@@ -1,36 +1,35 @@
-import { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
 import { educationDistributionChart } from "../../utils/chartData/educationDistributionChart";
+import { Bar } from "react-chartjs-2";
+import { useMemo } from "react";
+import { CHART_COLORS } from "../../utils/chartData/utilsChart/chartColors";
 
 export function EducationDistributionChart({ users }) {
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const chartData = useMemo(() => {
+    if (!users?.length) return null;
 
-  useEffect(() => {
-    if (!users || users.length === 0) return;
-
-    const educationCounts = {};
+    const counts = {};
     users.forEach((u) => {
       const level = u.education?.[0]?.level || "Не указано";
-      educationCounts[level] = (educationCounts[level] || 0) + 1;
+      counts[level] = (counts[level] || 0) + 1;
     });
 
-    setChartData({
-      labels: Object.keys(educationCounts),
+    return {
+      labels: Object.keys(counts),
       datasets: [
         {
           label: "Количество граждан",
-          data: Object.values(educationCounts),
-          backgroundColor: "rgba(75, 192, 192, 0.6)",
-          borderColor: "rgba(75, 192, 192, 1)",
+          data: Object.values(counts),
+          backgroundColor: CHART_COLORS.green,
+          borderColor: CHART_COLORS.greenBorder,
           borderWidth: 1,
         },
       ],
-    });
+    };
   }, [users]);
 
   return (
     <div className="h-full w-full border border-blue-200">
-      {chartData.labels.length > 0 ? (
+      {chartData ? (
         <Bar data={chartData} options={educationDistributionChart} />
       ) : (
         <p>Нет данных</p>

@@ -75,8 +75,8 @@ const Forma = ({ user }) => {
           rules={[{ required: true, message: "Выберите пол!" }]}
         >
           <Select placeholder="Выберите пол">
-            <Select.Option value="Мужчина">Мужчина</Select.Option>
-            <Select.Option value="Женщина">Женщина</Select.Option>
+            <Select.Option value="Мужской">Мужской</Select.Option>
+            <Select.Option value="Женский">Женский</Select.Option>
           </Select>
         </Form.Item>
 

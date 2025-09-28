@@ -1,4 +1,4 @@
-const AgeDistributionOption = {
+const ageOption = {
   responsive: true,
   maintainAspectRatio: false,
   plugins: {
@@ -14,7 +14,7 @@ const AgeDistributionOption = {
         callbacks: {
           label: function (context) {
             const datasetLabel = context.dataset.label || "";
-            const value = context.parsed?.y ?? context.parsed; 
+            const value = context.parsed?.y ?? context.parsed;
             const label = context.chart.data.labels[context.dataIndex];
 
             return `${datasetLabel} (${label}): ${value} чел.`;
@@ -24,3 +24,5 @@ const AgeDistributionOption = {
     },
   },
 };
+
+export default ageOption;
