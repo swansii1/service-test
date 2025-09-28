@@ -1,77 +1,60 @@
-import { useState, useEffect } from "react";
-import { Pie } from "react-chartjs-2";
 import { ageGenderChartOption } from "../../utils/chartData/ageGenderageChartOptions";
+import { Pie } from "react-chartjs-2";
+import { useMemo } from "react";
+import { CHART_COLORS } from "../../utils/chartData/utilsChart/chartColors";
+import { GENDER_MAP } from "../../utils/chartData/utilsChart/chartHelpers";
 
 export function GenderDistributionChart({ users }) {
-  const [chartData, setChartData] = useState({
-    labels: [],
-    datasets: [],
-  });
+  const chartData = useMemo(() => {
+    if (!users?.length) return null;
 
-  useEffect(() => {
-    if (!users || users.length === 0) return;
+    let male = 0;
+    let female = 0;
 
-    let maleCount = 0;
-    let femaleCount = 0;
-
-    users.forEach((citizen) => {
-      if (citizen.gender) {
-        const normalizedGender = citizen.gender.toLowerCase().trim();
-        if (normalizedGender === "мужской" || normalizedGender === "м") {
-          maleCount++;
-        } else if (normalizedGender === "женский" || normalizedGender === "ж") {
-          femaleCount++;
-        }
-      }
+    users.forEach((u) => {
+      const gender = u.gender?.toLowerCase().trim();
+      if (GENDER_MAP.male.includes(gender)) male++;
+      if (GENDER_MAP.female.includes(gender)) female++;
     });
 
     const labels = [];
-    const dataValues = [];
-    const backgroundColors = [];
-    const borderColors = [];
+    const values = [];
+    const colors = [];
+    const borders = [];
 
-    if (maleCount > 0) {
+    if (male > 0) {
       labels.push("Мужчины");
-      dataValues.push(maleCount);
-      backgroundColors.push("rgba(54, 162, 235, 0.8)");
-      borderColors.push("rgba(54, 162, 235, 1)");
+      values.push(male);
+      colors.push(CHART_COLORS.blue);
+      borders.push(CHART_COLORS.blueBorder);
     }
-    if (femaleCount > 0) {
+    if (female > 0) {
       labels.push("Женщины");
-      dataValues.push(femaleCount);
-      backgroundColors.push("rgba(255, 99, 132, 0.8)");
-      borderColors.push("rgba(255, 99, 132, 1)");
+      values.push(female);
+      colors.push(CHART_COLORS.red);
+      borders.push(CHART_COLORS.redBorder);
     }
 
-    setChartData({
+    return {
       labels,
       datasets: [
         {
           label: "Количество граждан",
-          data: dataValues,
-          backgroundColor: backgroundColors,
-          borderColor: borderColors,
+          data: values,
+          backgroundColor: colors,
+          borderColor: borders,
           borderWidth: 1,
         },
       ],
-    });
+    };
   }, [users]);
 
   return (
-    <div className="h-full w-full border border-blue-200">
-      {chartData.labels.length > 0 && chartData.datasets[0]?.data.length > 0 ? (
+    <div className="h-full w-full border border-blue-200 flex items-center justify-center">
+      {chartData ? (
         <Pie data={chartData} options={ageGenderChartOption} />
       ) : (
-        <div
-          style={{
-            height: "100%",
-            display: "flex",
-            justifyContent: "center",
-            alignItems: "center",
-          }}
-        >
-          Нет данных для отображения кругового графика.
-        </div>
+        <p>Нет данных</p>
       )}
     </div>
   );

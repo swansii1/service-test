@@ -1,37 +1,35 @@
-import { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
 import { options } from "../../utils/chartData/optionsFamilyMembers";
-
+import { Bar } from "react-chartjs-2";
+import { useMemo } from "react";
+import { CHART_COLORS } from "../../utils/chartData/utilsChart/chartColors";
 
 export function FamilyMembersChart({ users }) {
-  const [chartData, setChartData] = useState({ labels: [], datasets: [] });
+  const chartData = useMemo(() => {
+    if (!users?.length) return null;
 
-  useEffect(() => {
-    if (!users || users.length === 0) return;
-
-    const familyCount = {};
+    const counts = {};
     users.forEach((u) => {
       const count = u.familyMembers?.length || 0;
-      familyCount[count] = (familyCount[count] || 0) + 1;
+      counts[count] = (counts[count] || 0) + 1;
     });
 
-    setChartData({
-      labels: Object.keys(familyCount),
+    return {
+      labels: Object.keys(counts),
       datasets: [
         {
           label: "Количество граждан",
-          data: Object.values(familyCount),
-          backgroundColor: "rgba(153, 102, 255, 0.6)",
-          borderColor: "rgba(153, 102, 255, 1)",
+          data: Object.values(counts),
+          backgroundColor: CHART_COLORS.purple,
+          borderColor: CHART_COLORS.purpleBorder,
           borderWidth: 1,
         },
       ],
-    });
+    };
   }, [users]);
 
   return (
     <div className="h-full w-full border border-blue-200">
-      {chartData.labels.length > 0 ? (
+      {chartData ? (
         <Bar data={chartData} options={options} />
       ) : (
         <p>Нет данных</p>

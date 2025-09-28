@@ -1,74 +1,54 @@
-import { useEffect, useState } from "react";
-import { Bar } from "react-chartjs-2";
 import { ageGenderChartOption } from "../../utils/chartData/ageGenderageChartOptions";
+import { Bar } from "react-chartjs-2";
+import { useMemo } from "react";
+import {
+  AGE_GROUPS,
+  calcAge,
+  getAgeGroup,
+  GENDER_MAP,
+} from "../../utils/chartData/utilsChart/chartHelpers";
+import { CHART_COLORS } from "../../utils/chartData/utilsChart/chartColors";
 
 export function AgeGenderChart({ users }) {
-  const [chartData, setChartData] = useState(null);
+  const chartData = useMemo(() => {
+    if (!users?.length) return null;
 
-  const ageGroups = ["18–25", "26–35", "36–45", "46+"];
+    const grouped = { male: [0, 0, 0, 0], female: [0, 0, 0, 0] };
 
-  useEffect(() => {
-    if (!users || users.length === 0) return;
+    users.forEach((u) => {
+      const age = calcAge(u.dateOfBirth);
+      const idx = getAgeGroup(age);
+      if (idx === null) return;
 
-    const grouped = {
-      male: [0, 0, 0, 0],
-      female: [0, 0, 0, 0],
-    };
-
-    users.forEach((user) => {
-      const birthDate = new Date(user.dateOfBirth);
-      const today = new Date();
-      let age = today.getFullYear() - birthDate.getFullYear();
-      const m = today.getMonth() - birthDate.getMonth();
-      if (m < 0 || (m === 0 && today.getDate() < birthDate.getDate())) {
-        age--;
-      }
-
-      let idx;
-      if (age <= 25) idx = 0;
-      else if (age <= 35) idx = 1;
-      else if (age <= 45) idx = 2;
-      else idx = 3;
-
-      const normalizedGender = user.gender?.toLowerCase().trim();
-      if (
-        normalizedGender === "male" ||
-        normalizedGender === "мужской" ||
-        normalizedGender === "м"
-      ) {
-        grouped.male[idx]++;
-      } else if (
-        normalizedGender === "female" ||
-        normalizedGender === "женский" ||
-        normalizedGender === "ж"
-      ) {
-        grouped.female[idx]++;
-      }
+      const gender = u.gender?.toLowerCase().trim();
+      if (GENDER_MAP.male.includes(gender)) grouped.male[idx]++;
+      if (GENDER_MAP.female.includes(gender)) grouped.female[idx]++;
     });
 
-    setChartData({
-      labels: ageGroups,
+    return {
+      labels: AGE_GROUPS,
       datasets: [
         {
           label: "Мужчины",
           data: grouped.male,
-          backgroundColor: "rgba(54, 162, 235, 0.7)",
+          backgroundColor: CHART_COLORS.blue,
         },
         {
           label: "Женщины",
           data: grouped.female,
-          backgroundColor: "rgba(255, 99, 132, 0.7)",
+          backgroundColor: CHART_COLORS.red,
         },
       ],
-    });
+    };
   }, [users]);
 
-  return chartData ? (
+  return (
     <div className="h-full w-full border border-blue-200">
-      <Bar
-        data={chartData}
-        options={{ ...ageGenderChartOption, maintainAspectRatio: false }}
-      />
+      {chartData ? (
+        <Bar data={chartData} options={ageGenderChartOption} />
+      ) : (
+        <p>Нет данных</p>
+      )}
     </div>
-  ) : null;
+  );
 }
